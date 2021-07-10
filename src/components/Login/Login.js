@@ -12,10 +12,16 @@ const Login = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
-    setFormIsValid(
-      enteredEmail.includes("@") && enteredPassword.trim().length > 6
-    );
-  }, [enteredPassword, enteredEmail]);
+    const identifier = setTimeout(() => {
+      setFormIsValid(
+        enteredEmail.includes("@") && enteredPassword.trim().length > 6
+      );
+    }, 500);
+
+    return () => {
+      clearTimeout(identifier); //temp to store keystroke...
+    }; //Clean function
+  }, [enteredPassword, enteredEmail]); //called when pass and email changed (enter keystroke)
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
