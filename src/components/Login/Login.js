@@ -38,17 +38,22 @@ const Login = props => {
         value: "", isValid: null, //init state
     });
 
-    useEffect(() => {
-      const identifier = setTimeout(() => {
-        setFormIsValid(
-          emailState.isValid && passState.isValid
-        );
-      }, 500);
+    //Object Destructing -> pull out the properties of object (solve problem re-run effect)
+    const {isValid: emailIsValid} = emailState;
+    const {isValid: passIsValid} = passState;
+    //->the isValid value is changed but the validity(T/F) is not changed -> effect not rerun
 
-      return () => {
-        clearTimeout(identifier); //temp to store keystroke...
-      }; //Clean function
-    }, [emailState, passState]); //called when pass and email changed (enter keystroke) -> get the correct state
+    useEffect(() => {
+        const identifier = setTimeout(() => {
+            setFormIsValid(
+                emailIsValid && passIsValid
+            );
+        }, 500);
+
+        return () => {
+            clearTimeout(identifier); //temp to store keystroke...
+        }; //Clean function
+    }, [emailIsValid, passIsValid]); //called when pass and email changed (enter keystroke) -> get the correct state
 
     const emailChangeHandler = (event) => {
         //be dispatched to reducer action to change state (change value and isValid)
