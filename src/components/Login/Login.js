@@ -38,10 +38,12 @@ const Login = props => {
         value: "", isValid: null, //init state
     });
 
-    //Object Destructing -> pull out the properties of object (solve problem re-run effect)
+    //Object Destructing -> pull out the properties of object (solve problem re-run effect
     const {isValid: emailIsValid} = emailState;
     const {isValid: passIsValid} = passState;
-    //->the isValid value is changed but the validity(T/F) is not changed -> effect not rerun
+    //Only use isValid to change, not use Value in state
+    //->the email/passState.isValid value is changed but the validity(T/F) is not changed
+    // -> effect not rerun
 
     useEffect(() => {
         const identifier = setTimeout(() => {
