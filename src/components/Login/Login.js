@@ -42,7 +42,7 @@ const Login = props => {
     const {isValid: emailIsValid} = emailState;
     const {isValid: passIsValid} = passState;
     //Only use isValid to change, not use Value in state
-    //->the email/passState.isValid value is changed but the validity(T/F) is not changed
+    //->the Value is changed but the isValid is not changed
     // -> effect not rerun
 
     useEffect(() => {
