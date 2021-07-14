@@ -1,12 +1,18 @@
-import React, { useRef } from "react";
+import React, { useRef, useImperativeHandle } from "react";
 import classes from "./Input.module.css";
 
-function Input(props) {
+const Input = React.forwardRef((props, ref) => {
   const inputRef = useRef();
 
   const activate = () => {
     inputRef.current.focus(); //build-in function
   }; //problem because we cannot use props.ref !!!
+
+  useImperativeHandle(ref, () => {
+    return {
+      focus: activate,
+    };
+  });
 
   return (
     <div
@@ -25,6 +31,6 @@ function Input(props) {
       />
     </div>
   );
-}
+});
 
 export default Input;

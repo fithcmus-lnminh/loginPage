@@ -99,9 +99,9 @@ const Login = () => {
     if (formIsValid) {
       context.onLogin(emailState.value, passState.value);
     } else if (!emailIsValid) {
-      emailInputRef.current.activate();
+      emailInputRef.current.focus();
     } else {
-      passwordInputRef.current.activate();
+      passwordInputRef.current.focus();
     }
   };
 
