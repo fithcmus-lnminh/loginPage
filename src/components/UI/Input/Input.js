@@ -8,6 +8,7 @@ const Input = React.forwardRef((props, ref) => {
     inputRef.current.focus(); //build-in function
   }; //problem because we cannot use props.ref !!!
 
+  //transform activate function for Login used
   useImperativeHandle(ref, () => {
     return {
       focus: activate,
