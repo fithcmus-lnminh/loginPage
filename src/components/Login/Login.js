@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useReducer, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  useContext,
+  useRef,
+} from "react";
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
@@ -42,6 +48,9 @@ const Login = () => {
     value: "",
     isValid: null, //init state
   });
+
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
 
   //Object Destructing -> pull out the properties of object (solve problem re-run effect
   const { isValid: emailIsValid } = emailState;
@@ -87,13 +96,20 @@ const Login = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    context.onLogin(emailState.value, passState.value);
+    if (formIsValid) {
+      context.onLogin(emailState.value, passState.value);
+    } else if (!emailIsValid) {
+      emailInputRef.current.activate();
+    } else {
+      passwordInputRef.current.activate();
+    }
   };
 
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
         <Input
+          ref={emailInputRef}
           id="email"
           label="E-Mail"
           type="email"
@@ -103,6 +119,7 @@ const Login = () => {
           onBlur={validateEmailHandler}
         />
         <Input
+          ref={passwordInputRef}
           id="password"
           label="Password"
           type="password"
@@ -112,7 +129,7 @@ const Login = () => {
           onBlur={validatePasswordHandler}
         />
         <div className={classes.actions}>
-          <Button type="submit" className={classes.btn} disabled={!formIsValid}>
+          <Button type="submit" className={classes.btn}>
             Login
           </Button>
         </div>
